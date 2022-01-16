@@ -31,7 +31,7 @@ GUESSES = [guess.upper() for guess in GUESSES if len(guess) == kWordLength]
 print(len(GUESSES))
 
 
-TABLEFILEPATH = "/Users/gurudev/Desktop/state_array"
+TABLEFILEPATH = "./state_array"
 
 class LetterStates(Enum):
     NOTPRESENT = 0
