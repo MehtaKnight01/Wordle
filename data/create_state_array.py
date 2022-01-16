@@ -2,6 +2,7 @@ import sqlite3, sys
 import numpy as np
 from enum import Enum
 import pickle
+import os
 
 #Definitions:
 #Guess - a 5-letter word from the list of possible guesses
@@ -11,11 +12,15 @@ import pickle
 
 #Creates a lookup table of results for every single combination of (Guess, Solution). Should be approx 12000x2300 in size.
 
+ROOT_DIR = os.path.dirname(__file__)
+GUESSES_FILE_PATH = os.path.join(ROOT_DIR, 'guesses.txt')
+SOLUTIONS_FILE_PATH = os.path.join(ROOT_DIR, 'solutions.txt')
+STATE_ARRAY_FILE_PATH = os.path.join(ROOT_DIR, 'state_array')
+
 kWordLength = 5
 
 # Download solutions
-SOLUTIONSFILEPATH = sys.argv[2]
-file = open(SOLUTIONSFILEPATH)
+file = open(SOLUTIONS_FILE_PATH)
 ALLSOLUTIONS = file.read().splitlines()
 file.close()
 ALLSOLUTIONS = [solution.upper() for solution in ALLSOLUTIONS if len(solution) == kWordLength]
@@ -23,15 +28,12 @@ ALLSOLUTIONS = [solution.upper() for solution in ALLSOLUTIONS if len(solution) =
 print(len(ALLSOLUTIONS))
 
 # Download guesses
-GUESSESFILEPATH = sys.argv[1]
-file = open(GUESSESFILEPATH)
+file = open(GUESSES_FILE_PATH)
 GUESSES = file.read().splitlines()
 file.close()
 GUESSES = [guess.upper() for guess in GUESSES if len(guess) == kWordLength]
 print(len(GUESSES))
 
-
-TABLEFILEPATH = "./state_array"
 
 class LetterStates(Enum):
     NOTPRESENT = 0
@@ -109,5 +111,5 @@ for i, guess in enumerate(GUESSES):
 # array = np.array(build_state_array(GUESSES, ALLSOLUTIONS))
 array = np.array(a, dtype=np.uint8)
 assert value_for_solution("LATEN", "ROVER") == array[6117, 868], str(value_for_solution("LATEN", "ROVER")) + str(array[6117, 868])
-array.dump(TABLEFILEPATH)
+array.dump(STATE_ARRAY_FILE_PATH)
 print array.shape
