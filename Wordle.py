@@ -30,8 +30,9 @@ SOLUTIONS_FILE_PATH = os.path.join(ROOT_DIR, 'data', 'solutions.txt')
 STATE_ARRAY_FILE_PATH = os.path.join(ROOT_DIR, 'data', 'state_array')
 
 #Load characteristics of algorithm you want to use
-obj_fn = WordleAlgs.knuth_Fn
-bestStart = WordleAlgs.KNUTH_BEST_START 
+obj_fn = WordleAlgs.log_Fn
+bestStart = WordleAlgs.LOG_BEST_START
+tieBreakFn = None 
 maximize = False
 
 #Initialize corpus of guesses, solutions, and results

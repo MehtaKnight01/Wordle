@@ -53,9 +53,9 @@ def greedy_Fn(states):
 #----------------------- END defining algorithms -----------------------
 
 
-#Set pre-computed best first words for a given algorithm. Index corresponds to location in guess list.
+#Set pre-computed best first words for a given algorithm. Can be determined by calling getBestFirstWords. Index corresponds to location in guess list.
 LOG_BEST_START = [10364, "SOARE"]
-RISH_BEST_START = [8859, "RAISE"] #[9247, "ROATE"]
+RISH_BEST_START = [9247, "ROATE"]
 KNUTH_BEST_START = [8859, "RAISE"]
 
 
