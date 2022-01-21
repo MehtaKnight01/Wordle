@@ -35,7 +35,7 @@ class Solver:
 		return
 		
 
-	def obtainNextGuess(self, prevResult):
+	def obtainNextGuess(self, prevResult, guess = None):
 		#remove previous guess from the list of not-yet-guessed words
 		self.__removeGuess(self.bestGuess[0])
 
@@ -43,7 +43,10 @@ class Solver:
 		indices = np.where((self.resultsForGuess != prevResult)) 
 		self.__removeSolutions(indices)
 
-		self.bestGuess = self.__getBestGuess()
+		if guess == None: 
+			self.bestGuess = self.__getBestGuess()
+		else: 
+			self.bestGuess = self.setBestGuess(guess)
 		self.guessesMade.append(self.bestGuess[1])
 		self.resultsForGuess = self.__getResultsForGuess(self.bestGuess[0])
 
@@ -80,6 +83,10 @@ class Solver:
 	def printGuessedWords(self):
 		print "The words that were guessed over this game were: ", self.guessesMade
 
+	def setBestGuess(self, guess):
+		#forcibly set the best guess to something else
+		index = self.corpus.getGuessIndex(guess)
+		return [index, guess] 
 
 	def __pickBestGuessFromList(self, indices):
 		#First priority is to pick any that's in the set of solutions

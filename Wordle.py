@@ -37,6 +37,11 @@ maximize = False
 
 #Initialize corpus of guesses, solutions, and results
 corpus = Corpus(GUESSES_FILE_PATH, SOLUTIONS_FILE_PATH, STATE_ARRAY_FILE_PATH) #I don't understand python well enough to know if this is performant
+pickOwnGuess = raw_input("Want to pick your own guess instead of having the algorithm find one? (y/n)")
+if pickOwnGuess == 'y':
+	ownGuess = str(raw_input("What do you want to guess? "))
+	index = corpus.getGuessIndex(ownGuess)
+	bestStart = [index, ownGuess]
 firstGuessResultsArray = corpus.stateArray[bestStart[0]] #Array of all possible outputs for the first guess
 solver = Solver(bestStart[0], firstGuessResultsArray, corpus, obj_fn, maximize)
 
@@ -61,7 +66,11 @@ for y in range(1,7):
 		solver.printGuessedWords()
 		print "Winner!"
 		quit()
-	solver.obtainNextGuess(stateValue)
+	pickOwnGuess = raw_input("Want to pick your own guess instead of having the algorithm find one? (y/n)")
+	ownGuess = None
+	if pickOwnGuess == 'y':
+		ownGuess = str(raw_input("What do you want to guess? "))
+	solver.obtainNextGuess(stateValue, ownGuess)
 	nSolutions = len(solver.corpus.solutions)
 	print "There are only " + str(nSolutions) + " possible solutions remaining."
 	if nSolutions <= 170:
